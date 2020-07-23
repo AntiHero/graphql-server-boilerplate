@@ -1,0 +1,32 @@
+{
+   "name": "graphql-server-boilerplate",
+   "version": "0.0.1",
+   "description": "Awesome project developed with TypeORM.",
+   "devDependencies": {
+      "@types/bcryptjs": "^2.4.2",
+      "@types/node": "^14.0.9",
+      "@types/uuid": "^8.0.0",
+      "gql2ts": "^1.10.1",
+      "ts-node": "8.10.2",
+      "ts-node-dev": "^1.0.0-pre.44",
+      "tslint": "^6.1.2",
+      "tslint-config-prettier": "^1.18.0",
+      "typescript": "3.9.3"
+   },
+   "dependencies": {
+      "@graphql-tools/graphql-file-loader": "^6.0.15",
+      "@graphql-tools/load": "^6.0.15",
+      "bcryptjs": "^2.4.3",
+      "graphql-import-node": "^0.0.4",
+      "graphql-yoga": "^1.18.3",
+      "pg": "^8.2.1",
+      "reflect-metadata": "^0.1.13",
+      "typeorm": "0.2.25",
+      "uuid": "^8.2.0"
+   },
+   "scripts": {
+      "start": "tsnd --respawn src/index.ts",
+      "gen-schema-types": "gql2ts src/schema.graphql -o src/types/schema.d.ts"
+   },
+   "license": "MIT"
+}
