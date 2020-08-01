@@ -1,15 +1,16 @@
 import { 
   Entity, 
   Column,
-  PrimaryColumn, 
-  BeforeInsert, 
-  BaseEntity 
+  BaseEntity, 
+  PrimaryGeneratedColumn,
 } from "typeorm";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
+// import { uuid } from 'uuidv4';
 
 @Entity("users")
 export class User extends BaseEntity{
-  @PrimaryColumn("uuid")
+  // problem with uuid function while testing is solved with the help of adding extention to db CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column("varchar", {length: 255})
@@ -18,8 +19,11 @@ export class User extends BaseEntity{
   @Column("text")
   password: string;
 
-  @BeforeInsert()
-  addId() {
-    this.id = uuidv4();
-  }
+  @Column("boolean", { default: false })
+  confirmed: boolean;
+
+  // @BeforeInsert()
+  // addId() {
+  //   this.id = uuidv4();
+  // }
 }

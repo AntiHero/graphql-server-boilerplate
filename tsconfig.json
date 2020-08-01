@@ -19,7 +19,7 @@
     "allowSyntheticDefaultImports": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "esModuleInterop": true,
+    "esModuleInterop": false,
   },
   "exclude": ["node_modules"],
   "include": ["./src/**/*.tsx", "./src/**/*.ts"]
