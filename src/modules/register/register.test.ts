@@ -1,3 +1,6 @@
+import { TestClient } from './../../utils/TestClient';
+import { Connection } from 'typeorm';
+import { createTypeORMConnection } from './../../utils/createTypeORMConnection';
 
 import "isomorphic-fetch";
 import {
@@ -6,36 +9,27 @@ import {
   emailTooShort,
   passwordTooShort,
 } from "./errorMessages";
-import { startServer } from "../../startServer";
 import { User } from "../../entity/User";
-import { request } from "graphql-request";
 
-let getHost = () => "";
 const email = "test@test.by";
 const password = "test1234";
 
-beforeAll(async () => {
-  const app = await startServer();
-  // const port = app.port;
-  const port = (app.address() as any).port;
+let connection: Connection;
 
-  getHost = () => `http://localhost:${port}`;
-  await User.delete({ email });
+beforeAll(async () => {
+  connection = await createTypeORMConnection();
 });
 
-const mutation = (email: string, password: string) => `
-  mutation {
-    register(email: "${email}", password: "${password}") {
-      path
-      message
-    }
-  }
-`;
+afterAll(async () => {
+  connection.close();
+});
 
 describe("Register user", () => {
   it("successfull registration", async () => {
-    const response = await request(getHost(), mutation(email, password));
-    expect(response).toEqual({ register: null });
+    const client = new TestClient(process.env.TEST_HOST as string);
+    
+    const response = await client.register(email, password);
+    expect(response.data.data).toEqual({ register: null });
   
     const users = await User.find({ where: { email } });
     expect(users.length).toBe(1);
@@ -46,10 +40,11 @@ describe("Register user", () => {
   })
 
   it("duplicated email", async () => {
-    const response2 = await request(getHost(), mutation(email, password));
+    const client = new TestClient(process.env.TEST_HOST as string);
+    const response2 = await client.register(email, password);
   
-    expect(response2.register).toHaveLength(1);
-    expect(response2.register).toEqual([
+    expect(response2.data.data.register).toHaveLength(1);
+    expect(response2.data.data.register).toEqual([
       {
         message: duplicatedEmail,
         path: "email",
@@ -58,16 +53,20 @@ describe("Register user", () => {
   })
 
   it("short email", async () => {
-    const response = await request(getHost(), mutation("b", password));
-    expect(response.register).toEqual([
+    const client = new TestClient(process.env.TEST_HOST as string);
+    
+    const response = await client.register("b", password);
+    expect(response.data.data.register).toEqual([
       { message: emailTooShort, path: "email" },
       { message: invalidEmal, path: "email" },
     ]);
   })
 
   it("short pass", async () => {
-    const response2 = await request(getHost(), mutation(email, "b"));
-    expect(response2.register).toEqual([
+    const client = new TestClient(process.env.TEST_HOST as string);
+
+    const response2 = await client.register(email, "b");
+    expect(response2.data.data.register).toEqual([
       {
         message: passwordTooShort,
         path: 'password',
