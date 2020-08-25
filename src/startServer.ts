@@ -1,5 +1,6 @@
 import "reflect-metadata";
 import "graphql-import-node";
+import { redisSessionPrefix } from './constants';
 import * as express from "express";
 import { createSchema } from "./utils/createSchema";
 import { confirmEmail } from "./routes/Email";
@@ -7,8 +8,8 @@ import { createTypeORMConnection } from "./utils/createTypeORMConnection";
 import { ApolloServer } from "apollo-server-express";
 import * as session from "express-session";
 import redis from "./redis";
-import * as dotenv from 'dotenv';
-import * as connectRedis from 'connect-redis';
+import * as dotenv from "dotenv";
+import * as connectRedis from "connect-redis";
 
 dotenv.config();
 
@@ -20,7 +21,8 @@ export const startServer = async () => {
     context: ({ req }) => ({
       redis,
       url: req.protocol + "://" + req.get("host"),
-      session: req.session
+      session: req.session,
+      req,
     }),
   });
 
@@ -30,7 +32,7 @@ export const startServer = async () => {
 
   app.use(
     session({
-      store: new RedisStore({client: redis as any}),
+      store: new RedisStore({ client: redis as any, prefix: redisSessionPrefix }),
       name: "qid",
       secret: process.env.SESSION_SECRET as string,
       resave: false,

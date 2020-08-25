@@ -1,5 +1,5 @@
-import { TestClient } from './../../utils/TestClient';
 import "isomorphic-fetch";
+import { TestClient } from './../../utils/TestClient';
 import { User } from "./../../entity/User";
 import { Connection } from "typeorm";
 import { createTypeORMConnection } from "./../../utils/createTypeORMConnection";

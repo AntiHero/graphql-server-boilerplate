@@ -1,4 +1,5 @@
-import { failedLogin, failedConfirm } from "./errorMessages";
+import { userSessionIdPrefix } from './../../constants';
+import { failedLogin, failedConfirm, accountIsLocked } from "./errorMessages";
 import { User } from "../../entity/User";
 import { ResolverMap } from "../../@types/graphql-utils";
 import * as bcrypt from "bcryptjs";
@@ -18,7 +19,7 @@ export const resolvers: ResolverMap = {
     login: async (
       _,
       { email, password }: GQL.ILoginOnMutationArguments,
-      { session }
+      { session, redis, req }
     ) => {
       const user = await User.findOne({ where: { email } });
 
@@ -30,6 +31,10 @@ export const resolvers: ResolverMap = {
         return errorResponse(failedConfirm);
       }
 
+      if (user.restorePasswordLocked) {
+        return errorResponse(accountIsLocked);
+      }
+
       const valid = await bcrypt.compare(password, user.password);
 
       if (!valid) {
@@ -39,6 +44,10 @@ export const resolvers: ResolverMap = {
       // login success
       session.userId = user.id;
       
+      if (req.sessionID) {
+        await redis.lpush(`${userSessionIdPrefix}${user.id}`, req.sessionID);
+      }
+
       return null;
     },
   },

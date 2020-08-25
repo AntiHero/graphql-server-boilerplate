@@ -2,7 +2,6 @@ import { TestClient } from './../../utils/TestClient';
 import { User } from "../../entity/User";
 import { createTypeORMConnection } from "../../utils/createTypeORMConnection";
 import { Connection } from "typeorm";
-import axios from "axios";
 
 let connection: Connection;
 
@@ -28,7 +27,22 @@ afterAll(async () => {
 });
 
 describe("logout", () => {
-  test("test loggin out a user", async () => {
+  test("multiple sessions logout", async () => {
+    const client1 = new TestClient(process.env.TEST_HOST as string);
+    const client2 = new TestClient(process.env.TEST_HOST as string);
+
+    await client1.login(email, password);
+    await client2.login(email, password);
+
+    expect((await client1.me()).data.data).toEqual((await client2.me()).data.data); 
+    
+    await client1.logout();
+
+    expect((await client1.me()).data.data).toEqual((await client2.me()).data.data); 
+
+  });
+
+  test("single session logout", async () => {
     const client = new TestClient(process.env.TEST_HOST as string);
 
     await client.login(email, password);

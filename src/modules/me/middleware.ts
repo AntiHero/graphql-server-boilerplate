@@ -1,5 +1,3 @@
-import { logger } from './../../utils/logger';
-import { User } from './../../entity/User';
 import { Resolver } from "./../../@types/graphql-utils.d";
 
 export default async (

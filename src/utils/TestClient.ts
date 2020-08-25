@@ -1,13 +1,19 @@
 import axios from "axios";
+import axiosCookieJarSupport from 'axios-cookiejar-support';
+import * as tough from 'tough-cookie';
+
+axiosCookieJarSupport(axios);
 
 export class TestClient {
   url: string;
   options: {
+    jar: any;
     withCredentials: boolean;
   };
   constructor(url: string) {
     this.url = url;
     this.options = {
+      jar: new tough.CookieJar(),
       withCredentials: true,
     };
   }
@@ -64,4 +70,21 @@ export class TestClient {
         `,
     });
   }
+
+  async restorePasswordChange(newPassword: string, key: string) {
+    return axios.post(this.url, {
+      ...this.options,
+      query: `
+      mutation {
+        restorePasswordChange(password: "${newPassword}", key: "${key}") {
+          path
+          message
+        }
+      }
+        `,
+    });
+  }
+
+
+
 }

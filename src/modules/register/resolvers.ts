@@ -1,15 +1,15 @@
+import { registerPasswordValidation } from './../../yupSchema';
 import { sendEmail } from "./../../utils/sendEmail";
 import { createConfirmEmailLink } from "./../../utils/createConfirmEmailLink";
 import { duplicatedEmail } from "./errorMessages";
 import { formatYupErrors } from "../../utils/formatYupErrors";
 import { User } from "../../entity/User";
 import { ResolverMap } from "../../@types/graphql-utils";
-import * as bcrypt from "bcryptjs";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
   email: yup.string().min(3).max(255).email(),
-  password: yup.string().min(6).max(255),
+  password: registerPasswordValidation,
 });
 
 export const resolvers: ResolverMap = {

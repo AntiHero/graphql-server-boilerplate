@@ -2,7 +2,6 @@ import { TestClient } from './../../utils/TestClient';
 import { User } from "../../entity/User";
 import { createTypeORMConnection } from "../../utils/createTypeORMConnection";
 import { Connection } from "typeorm";
-import axios from "axios";
 
 let connection: Connection;
 
