@@ -7,7 +7,7 @@
     "username": "nightcrawler",
     "password": "root",
     "database": "graphql-server-boilerplate",
-    "dropSchema": false,
+    "dropSchema": true,
     "synchronize": true,
     "logging": true,
     "entities": ["src/entity/**/*.ts"],
