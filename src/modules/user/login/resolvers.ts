@@ -1,7 +1,7 @@
-import { userSessionIdPrefix } from './../../constants';
+import { userSessionIdPrefix } from './../../../constants';
 import { failedLogin, failedConfirm, accountIsLocked } from "./errorMessages";
-import { User } from "../../entity/User";
-import { ResolverMap } from "../../@types/graphql-utils";
+import { User } from "./../../../entity/User";
+import { ResolverMap } from "./../../../@types/graphql-utils";
 import * as bcrypt from "bcryptjs";
 
 const errorResponse = (errorMessage: string) => [
@@ -12,9 +12,9 @@ const errorResponse = (errorMessage: string) => [
 ];
 
 export const resolvers: ResolverMap = {
-  Query: {
-    dummy: () => "dummy",
-  },
+  // Query: {
+  //   dummy: () => "dummy",
+  // },
   Mutation: {
     login: async (
       _,

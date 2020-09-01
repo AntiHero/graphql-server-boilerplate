@@ -1,23 +1,24 @@
-import { restorePasswordLockAccount } from './../../utils/restorePasswordLockAccount';
+import { createTestConn } from './../../../testUtils/createTestConnection';
+import { restorePasswordLockAccount } from '../../../utils/restorePasswordLockAccount';
 import { passwordTooShortError, expiredKeyError } from "./errorMessages";
 import { accountIsLocked } from "./../login/errorMessages";
 import * as Redis from "ioredis";
-import { createResotrePasswordEmailLink } from "./../../utils/createRestorePasswordEmailLink";
-import { TestClient } from "./../../utils/TestClient";
-import { User } from "../../entity/User";
-import { createTypeORMConnection } from "../../utils/createTypeORMConnection";
+import { createResotrePasswordEmailLink } from "../../../utils/createRestorePasswordEmailLink";
+import { TestClient } from "../../../utils/TestClient";
+import { User } from "../../../entity/User";
+import { createTypeORMConnection } from "../../../utils/createTypeORMConnection";
 import { Connection } from "typeorm";
 
 let connection: Connection;
 const redis = new Redis();
-const email = "logout@gmail.com";
+const email = "restore@gmail.com";
 const password = "test1234";
-const newPassword = "newPassowrd";
+const newPassword = "newPassword";
 
 let userId: string = "";
 
 beforeAll(async () => {
-  connection = await createTypeORMConnection();
+  connection = await createTestConn();
 
   const user = await User.create({
     email,

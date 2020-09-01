@@ -1,3 +1,4 @@
+import { createTestConn } from './../testUtils/createTestConnection';
 import * as Redis from "ioredis";
 import fetch from "node-fetch";
 import { User } from "./../entity/User";
@@ -11,7 +12,7 @@ const redis = new Redis();
 let connection: Connection;
 
 beforeAll(async () => {
-  connection = await createTypeORMConnection();
+  connection = await createTestConn();
   const user = await User.create({
     email: "cowboy@gmail.com",
     password: "test1234",

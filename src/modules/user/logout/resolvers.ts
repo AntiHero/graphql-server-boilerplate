@@ -1,11 +1,11 @@
-import { removeAllUserSessions } from './../../utils/removeAllUserSessions';
-import { userSessionIdPrefix, redisSessionPrefix } from './../../constants';
-import { ResolverMap } from "../../@types/graphql-utils";
+import { removeAllUserSessions } from './../../../utils/removeAllUserSessions';
+import { ResolverMap } from "./../../../@types/graphql-utils";
+// import { userSessionIdPrefix, redisSessionPrefix } from './../../../constants';
 
 export const resolvers: ResolverMap = {
-  Query: {
-    dummy: () => "dummy",
-  },
+  // Query: {
+  //   dummy: () => "dummy",
+  // },
   Mutation: {
     logout: async (_, __, { session, redis }) => {
       // return await new Promise((resolve) =>

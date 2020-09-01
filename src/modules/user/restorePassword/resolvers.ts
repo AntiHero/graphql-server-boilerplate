@@ -1,11 +1,11 @@
-import { formatYupErrors } from "./../../utils/formatYupErrors";
-import { registerPasswordValidation } from "./../../yupSchema";
-import { restorePasswordPrefix } from "./../../constants";
+import { formatYupErrors } from "../../../utils/formatYupErrors";
+import { registerPasswordValidation } from "../../../yupSchema";
+import { restorePasswordPrefix } from "../../../constants";
 import { userNotFoundError, expiredKeyError } from "./errorMessages";
-import { User } from "./../../entity/User";
-import { createResotrePasswordEmailLink } from "./../../utils/createRestorePasswordEmailLink";
-import { restorePasswordLockAccount } from "./../../utils/restorePasswordLockAccount";
-import { ResolverMap } from "./../../@types/graphql-utils.d";
+import { User } from "../../../entity/User";
+import { createResotrePasswordEmailLink } from "../../../utils/createRestorePasswordEmailLink";
+import { restorePasswordLockAccount } from "../../../utils/restorePasswordLockAccount";
+import { ResolverMap } from "../../../@types/graphql-utils";
 import * as yup from "yup";
 import * as bcrypt from 'bcryptjs';
 
@@ -15,9 +15,9 @@ const schema = yup.object().shape({
 });
 
 export const resolvers: ResolverMap = {
-  Query: {
-    dummy: () => "dummy",
-  },
+  // Query: {
+  //   dummy: () => "dummy",
+  // },
   Mutation: {
     sendForgotPasswordEmail: async (
       _,

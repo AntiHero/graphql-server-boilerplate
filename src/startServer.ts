@@ -1,3 +1,5 @@
+import { Connection } from 'typeorm';
+import { createTestConn } from './testUtils/createTestConnection';
 import { User } from "./entity/User";
 import "reflect-metadata";
 import "graphql-import-node";
@@ -38,7 +40,13 @@ export const startServer = async () => {
     origin: `http://localhost:${port}`,
   };
 
-  const connection = await createTypeORMConnection();
+  let connection: Connection;
+
+  if (process.env.NODE_ENV === "test") {
+    connection = await createTestConn(true);
+  } else {
+    connection = await createTypeORMConnection();
+  }
 
   passport.use(
     new Strategy(

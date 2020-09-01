@@ -1,6 +1,7 @@
-import { TestClient } from './../../utils/TestClient';
-import { User } from "../../entity/User";
-import { createTypeORMConnection } from "../../utils/createTypeORMConnection";
+import { createTestConn } from './../../../testUtils/createTestConnection';
+import { TestClient } from './../../../utils/TestClient';
+import { User } from "./../../../entity/User";
+import { createTypeORMConnection } from "./../../../utils/createTypeORMConnection";
 import { Connection } from "typeorm";
 
 let connection: Connection;
@@ -11,7 +12,7 @@ const password = "test1234";
 let userId: string = '';
 
 beforeAll(async () => {
-  connection = await createTypeORMConnection();
+  connection = await createTestConn();
 
   const user = await User.create({
     email,

@@ -1,6 +1,8 @@
+"""
 type Query {
   dummy: String
 }
+"""
 
 type Mutation {
   logout: Boolean

@@ -1,4 +1,4 @@
-import { passwordTooShort } from './modules/register/errorMessages';
+import { passwordTooShort } from './modules/user/register/errorMessages';
 import * as yup from "yup";
 
 

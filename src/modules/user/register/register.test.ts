@@ -1,6 +1,7 @@
-import { TestClient } from './../../utils/TestClient';
+import { createTestConn } from './../../../testUtils/createTestConnection';
+import { TestClient } from './../../../utils/TestClient';
 import { Connection } from 'typeorm';
-import { createTypeORMConnection } from './../../utils/createTypeORMConnection';
+import { createTypeORMConnection } from './../../../utils/createTypeORMConnection';
 
 import "isomorphic-fetch";
 import {
@@ -9,15 +10,15 @@ import {
   emailTooShort,
   passwordTooShort,
 } from "./errorMessages";
-import { User } from "../../entity/User";
+import { User } from "./../../../entity/User";
 
-const email = "test@test.by";
+const email = "register@test.by";
 const password = "test1234";
 
 let connection: Connection;
 
 beforeAll(async () => {
-  connection = await createTypeORMConnection();
+  connection = await createTestConn();
 });
 
 afterAll(async () => {

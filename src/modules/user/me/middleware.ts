@@ -1,4 +1,4 @@
-import { Resolver } from "./../../@types/graphql-utils.d";
+import { Resolver } from "./../../../@types/graphql-utils.d";
 
 export default async (
   resolver: Resolver,
