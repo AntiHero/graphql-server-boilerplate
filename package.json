@@ -55,7 +55,7 @@
     "graphql-request": "^2.0.0",
     "graphql-tools": "^6.0.15",
     "ioredis": "^4.17.3",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.2.1",
